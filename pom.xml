@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.1.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>com.chen</groupId>
     <artifactId>pandora</artifactId>
     <packaging>pom</packaging>
@@ -13,15 +20,14 @@
         <module>pandora-starter-mysql</module>
     </modules>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.1.RELEASE</version>
-    </parent>
-
     <properties>
         <lombok.version>1.16.20</lombok.version>
-        <mysql.connector.version>5.1.40</mysql.connector.version>
+        <mysql.connector.version>8.0.13</mysql.connector.version>
+        <mybatis.plus.version>3.0.7.1</mybatis.plus.version>
+        <freemarker.version>2.3.28</freemarker.version>
+        <p6spy.version>3.8.1</p6spy.version>
+        <strman.version>0.4.0</strman.version>
+        <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
     </properties>
 
     <dependencies>
@@ -36,7 +42,6 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
     <build>
