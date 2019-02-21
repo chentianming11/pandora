@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomDynamicDataSourceStrategy implements DynamicDataSourceStrategy {
 
     @Override
-    public String determineDataSource(List<String> dataSourceKeys) {
+    public String determineDataSourceKey(List<String> dataSourceKeys) {
         return dataSourceKeys.get(ThreadLocalRandom.current().nextInt(dataSourceKeys.size()));
     }
 }

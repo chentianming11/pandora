@@ -33,7 +33,7 @@ public class LoadBalanceDynamicDataSourceStrategy implements DynamicDataSourceSt
     private AtomicInteger index = new AtomicInteger(0);
 
     @Override
-    public String determineDataSource(List<String> dataSourceKeys) {
+    public String determineDataSourceKey(List<String> dataSourceKeys) {
         return dataSourceKeys.get(Math.abs(index.getAndAdd(1) % dataSourceKeys.size()));
     }
 }

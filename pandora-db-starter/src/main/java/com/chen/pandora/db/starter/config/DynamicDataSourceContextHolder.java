@@ -48,7 +48,7 @@ public class DynamicDataSourceContextHolder {
      * Use slave data source.
      */
     public void useSlaveDataSource() {
-        CONTEXT_HOLDER.set(dynamicDataSourceStrategy.determineDataSource(slaveKeys));
+        CONTEXT_HOLDER.set(dynamicDataSourceStrategy.determineDataSourceKey(slaveKeys));
     }
 
     /**

@@ -33,5 +33,5 @@ public interface DynamicDataSourceStrategy {
      * @param dataSourceKeys 数据源选择库
      * @return dataSource 所选择的数据源
      */
-    String determineDataSource(List<String> dataSourceKeys);
+    String determineDataSourceKey(List<String> dataSourceKeys);
 }
