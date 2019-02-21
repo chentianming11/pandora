@@ -1,6 +1,6 @@
 package com.chen.pandora.db.starter.util;
 
-import com.chen.pandora.db.starter.config.P6SpyProperties;
+import com.chen.pandora.db.starter.config.properties.P6SpyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;

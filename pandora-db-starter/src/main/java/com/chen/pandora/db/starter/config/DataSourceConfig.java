@@ -1,7 +1,7 @@
 package com.chen.pandora.db.starter.config;
 
-import com.chen.pandora.db.starter.common.DataSourceConstant;
 import com.chen.pandora.db.starter.config.hikari.HikariCpConfig;
+import com.chen.pandora.db.starter.config.properties.DynamicDataSourceProperties;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author 陈添明
@@ -37,16 +38,28 @@ public class DataSourceConfig {
      */
     @Bean
     @ConditionalOnMissingBean
-    public DataSource dataSource() {
+    public DataSource dataSource() throws IllegalAccessException, InstantiationException {
         DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
-        Map<Object, Object> dataSourceMap = new HashMap<>(2);
-        DataSource master = createHikariDataSource(properties.getMaster());
-        DataSource slave = createHikariDataSource(properties.getSlave());
-        dataSourceMap.put(DataSourceConstant.MASTER, master);
-        dataSourceMap.put(DataSourceConstant.SLAVE, slave);
-        // Set master datasource as default
-        dynamicRoutingDataSource.setDefaultTargetDataSource(master);
-        // Set master and slave datasource as target datasource
+        Map<Object, Object> dataSourceMap = new HashMap<>(8);
+        Map<String, DataSourceProperty> mapping = properties.getMapping();
+        mapping.forEach((dataSourceKey, dataSourceProperty) -> {
+            DataSource hikariDataSource = createHikariDataSource(dataSourceProperty);
+            dataSourceMap.put(dataSourceKey, hikariDataSource);
+            // 设置数据源到DynamicDataSourceContextHolder
+            if (Objects.equals(dataSourceKey, properties.getPrimary())){
+                DynamicDataSourceContextHolder.getInstance().setMasterKey(dataSourceKey);
+            } else {
+                DynamicDataSourceContextHolder.getInstance().getSlaveKeys().add(dataSourceKey);
+            }
+        });
+        // 设置多数据源选择策略
+        DynamicDataSourceContextHolder.getInstance()
+                .setDynamicDataSourceStrategy(properties.getStrategy().newInstance());
+
+        // 设置默认数据源
+        dynamicRoutingDataSource.setDefaultTargetDataSource(dataSourceMap.get(properties.getPrimary()));
+
+        // 设置全部数据源
         dynamicRoutingDataSource.setTargetDataSources(dataSourceMap);
         return dynamicRoutingDataSource;
     }

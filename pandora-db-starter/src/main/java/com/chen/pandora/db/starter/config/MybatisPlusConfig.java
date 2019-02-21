@@ -2,6 +2,7 @@
 package com.chen.pandora.db.starter.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.chen.pandora.db.starter.config.properties.PluginProperties;
 import com.chen.pandora.db.starter.interceptor.MapKeyFormatInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

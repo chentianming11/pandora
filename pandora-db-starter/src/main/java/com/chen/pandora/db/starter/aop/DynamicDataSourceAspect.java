@@ -1,6 +1,7 @@
-package com.chen.pandora.db.starter.config;
+package com.chen.pandora.db.starter.aop;
 
 import com.chen.pandora.db.starter.annotation.Slave;
+import com.chen.pandora.db.starter.config.DynamicDataSourceContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,14 +20,14 @@ public class DynamicDataSourceAspect {
     /**
      * 使用从库
      */
-    @Around("execution(* com.ke.jiaoyi..controller..*(..)) && @annotation(slave))")
+    @Around("@annotation(slave))")
     public Object proceed(ProceedingJoinPoint proceedingJoinPoint, Slave slave) throws Throwable {
         try {
-            DynamicDataSourceContextHolder.useSlaveDataSource();
+            DynamicDataSourceContextHolder.getInstance().useSlaveDataSource();
             Object result = proceedingJoinPoint.proceed();
             return result;
         } finally {
-            DynamicDataSourceContextHolder.clearDataSourceKey();
+            DynamicDataSourceContextHolder.getInstance().clearDataSource();
             logger.info("restore database connection");
         }
     }

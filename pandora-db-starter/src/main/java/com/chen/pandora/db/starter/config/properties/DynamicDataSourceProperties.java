@@ -14,13 +14,19 @@
  * limitations under the License.
  * <pre/>
  */
-package com.chen.pandora.db.starter.config;
+package com.chen.pandora.db.starter.config.properties;
 
+import com.chen.pandora.db.starter.config.DataSourceProperty;
 import com.chen.pandora.db.starter.config.hikari.HikariCpConfig;
+import com.chen.pandora.db.starter.strategy.DynamicDataSourceStrategy;
+import com.chen.pandora.db.starter.strategy.LoadBalanceDynamicDataSourceStrategy;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.core.Ordered;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author 陈添明
@@ -31,16 +37,18 @@ import org.springframework.core.Ordered;
 public class DynamicDataSourceProperties {
 
     /**
-     * 主数据源配置
+     * 必须设置默认的库,默认master
      */
-    @NestedConfigurationProperty
-    private DataSourceProperty master = new DataSourceProperty();
+    private String primary = "master";
+    /**
+     * 配置每一个数据源
+     */
+    private Map<String, DataSourceProperty> mapping = new LinkedHashMap<>();
 
     /**
-     * 从数据源配置
+     * 多数据源选择算法clazz，默认负载均衡算法
      */
-    @NestedConfigurationProperty
-    private DataSourceProperty slave = new DataSourceProperty();
+    private Class<? extends DynamicDataSourceStrategy> strategy = LoadBalanceDynamicDataSourceStrategy.class;
 
     /**
      * aop切面顺序，默认优先级最高
