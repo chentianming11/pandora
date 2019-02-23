@@ -2,11 +2,13 @@
 package com.chen.pandora.db.starter.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.chen.pandora.db.starter.config.condition.PaginationCodition;
 import com.chen.pandora.db.starter.config.properties.PluginProperties;
 import com.chen.pandora.db.starter.interceptor.MapKeyFormatInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -26,13 +28,9 @@ public class MybatisPlusConfig {
      * 分页插件
      */
     @Bean
+    @Conditional(PaginationCodition.class)
     public PaginationInterceptor paginationInterceptor() {
-        if (pluginProperties.isPagination() == true){
-            PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-            return paginationInterceptor;
-        } else {
-            return null;
-        }
+        return new PaginationInterceptor();
     }
 
     /**

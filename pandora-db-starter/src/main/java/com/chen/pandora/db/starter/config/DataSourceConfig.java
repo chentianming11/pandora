@@ -41,7 +41,7 @@ public class DataSourceConfig {
     public DataSource dataSource() throws IllegalAccessException, InstantiationException {
         DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
         Map<Object, Object> dataSourceMap = new HashMap<>(8);
-        Map<String, DataSourceProperty> mapping = properties.getMapping();
+        Map<String, DataSourceProperty> mapping = properties.getDataSource();
         mapping.forEach((dataSourceKey, dataSourceProperty) -> {
             DataSource hikariDataSource = createHikariDataSource(dataSourceProperty);
             dataSourceMap.put(dataSourceKey, hikariDataSource);

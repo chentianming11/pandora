@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 动态数据源配置
  * @author 陈添明
  * @date 2019/2/18
  */
@@ -43,7 +44,7 @@ public class DynamicDataSourceProperties {
     /**
      * 配置每一个数据源
      */
-    private Map<String, DataSourceProperty> mapping = new LinkedHashMap<>();
+    private Map<String, DataSourceProperty> dataSource = new LinkedHashMap<>();
 
     /**
      * 多数据源选择算法clazz，默认负载均衡算法
