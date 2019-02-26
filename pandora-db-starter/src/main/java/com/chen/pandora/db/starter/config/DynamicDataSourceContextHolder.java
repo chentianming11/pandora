@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class DynamicDataSourceContextHolder {
     private DynamicDataSourceContextHolder() {
     }
 
-    private List<String> slaveKeys;
+    private List<String> slaveKeys = new ArrayList<>();
 
     private String masterKey;
 
