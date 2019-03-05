@@ -1,6 +1,7 @@
 package com.chen.pandora.starter.web.exception;
 
-import com.chen.pandora.starter.web.BusinessCodeEnum;
+import com.chen.pandora.starter.web.resp.BusinessCode;
+import com.chen.pandora.starter.web.resp.ReturnCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,14 +16,14 @@ public class AppException extends RuntimeException {
 
     @Getter
     @Setter
-    private int code = BusinessCodeEnum.未知业务失败.code;
+    private ReturnCode code = BusinessCode.未知业务失败;
 
     public AppException(String message) {
         super(message);
         simplifyStackTrace();
     }
 
-    public AppException(String message, int code) {
+    public AppException(String message, ReturnCode code) {
         super(message);
         this.code = code;
         simplifyStackTrace();
@@ -34,7 +35,7 @@ public class AppException extends RuntimeException {
         simplifyStackTrace();
     }
 
-    public AppException(String message, int code, Throwable cause) {
+    public AppException(String message, ReturnCode code, Throwable cause) {
         super(message, cause);
         this.code = code;
         simplifyStackTrace();

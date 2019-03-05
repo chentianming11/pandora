@@ -1,10 +1,9 @@
 package com.chen.pandora.starter.web.advice;
 
-import com.chen.pandora.starter.web.BusinessCodeEnum;
-import com.chen.pandora.starter.web.ResultEntity;
 import com.chen.pandora.starter.web.exception.AppException;
+import com.chen.pandora.starter.web.resp.BusinessCode;
+import com.chen.pandora.starter.web.resp.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -22,37 +21,37 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AppException.class)
-    public HttpEntity handleAppException(AppException ex) {
+    public Result handleAppException(AppException ex) {
         log.info(ex.getMessage(), ex);
-        return ResultEntity.fail(ex.getCode(), ex.getMessage());
+        return Result.fail(ex.getCode(), ex.getMessage());
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public HttpEntity handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+    public Result handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
         log.info(ex.getMessage());
-        return ResultEntity.fail( "缺少参数: " + ex.getMessage());
+        return Result.fail(BusinessCode.缺少参数 ,ex.getMessage());
     }
 
     @ExceptionHandler(MissingServletRequestPartException.class)
-    public HttpEntity handleMissingServletRequestPartException(MissingServletRequestPartException ex) {
+    public Result handleMissingServletRequestPartException(MissingServletRequestPartException ex) {
         log.info(ex.getMessage());
-        return ResultEntity.fail( "缺少参数: " + ex.getMessage());
+        return Result.fail(BusinessCode.缺少参数, ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public HttpEntity handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+    public Result handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         log.info(ex.getMessage());
-        return ResultEntity.fail( "参数类型不匹配: " + ex.getMessage());
+        return Result.fail( BusinessCode.参数类型不匹配 , ex.getMessage());
     }
 
     @ExceptionHandler(MultipartException.class)
-    public HttpEntity handleFileUploadException(MultipartException ex){
+    public Result handleFileUploadException(MultipartException ex){
         log.info(ex.getMessage());
-        return ResultEntity.fail( "文件上传错误: " + ex.getMessage());
+        return Result.fail(BusinessCode.文件上传错误,ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public HttpEntity handleException(Exception ex) {
+    public Result handleException(Exception ex) {
         Throwable t = ex;
         while (true) {
             if (t instanceof AppException) {
@@ -63,6 +62,6 @@ public class GlobalExceptionHandler {
             }
         }
         log.error(ex.getMessage(), ex);
-        return ResultEntity.fail(BusinessCodeEnum.未知系统错误.code, ex.getMessage());
+        return Result.fail(BusinessCode.未知系统错误, ex.getMessage());
     }
 }
