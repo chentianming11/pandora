@@ -14,13 +14,14 @@
     <groupId>com.chen</groupId>
     <artifactId>pandora</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <modules>
         <module>pandora-web-starter</module>
         <module>pandora-db-starter</module>
     </modules>
 
     <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
         <lombok.version>1.16.20</lombok.version>
         <mysql.connector.version>8.0.13</mysql.connector.version>
         <mybatis.plus.version>3.0.7.1</mybatis.plus.version>
